@@ -16,6 +16,6 @@ class DashboardController extends Controller
             return view('admin.dashboard');
         }
 
-        return redirect()->route('guest.welcome'); // Reindirizza all'URL specificato nella route 'guest.welcome'
+        return redirect()->route('403'); // Reindirizza all'URL specificato nella route 'guest.welcome'
     }
 }

@@ -27,6 +27,11 @@ Route::get('/', function () {
     return view('guest.welcome', compact('project'));
 })->name('guest.welcome');
 
+Route::get('/403', function () {
+
+    return view('guest.403');
+})->name('403');
+
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

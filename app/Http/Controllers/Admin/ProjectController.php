@@ -15,9 +15,16 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+        $user = auth()->user();
 
-        return view('admin.projects.index', compact('projects'));
+        if ($user && $user->role == 'admin') {
+
+            $projects = Project::all();
+
+            return view('admin.projects.index', compact('projects'));
+        }
+
+        return redirect()->route('403');
     }
 
     /**
