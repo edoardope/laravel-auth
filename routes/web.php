@@ -25,7 +25,7 @@ Route::get('/', function () {
     $project = Project::all();
 
     return view('guest.welcome', compact('project'));
-});
+})->name('guest.welcome');
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
