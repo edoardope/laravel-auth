@@ -10,6 +10,7 @@
             <div class="card-body">
                 <h4 class="card-title">{{$item->title}}</h4>
                 <p class="card-text">Slug: {{$item->url}}</p>
+                <a href="{{ route('projects.show', ['project' => $item->id]) }}">details</a>
             </div>
         </div>
         @endforeach

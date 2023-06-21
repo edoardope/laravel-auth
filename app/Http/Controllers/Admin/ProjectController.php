@@ -34,7 +34,13 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        $user = auth()->user();
+
+        if ($user && $user->role == 'admin') {
+            return view('admin.projects.create');
+        }
+
+        return redirect()->route('403');
     }
 
     /**
@@ -45,7 +51,14 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $form_data = $request->all();
+
+        $new_project = new Project();
+
+        $new_project->fill($form_data);
+        $new_project->save();
+
+        return redirect()->route('admin.projects.index');
     }
 
     /**
@@ -56,7 +69,9 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+        return view('guest.projects.show');
     }
 
     /**
@@ -67,7 +82,16 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = auth()->user();
+
+        if ($user && $user->role == 'admin') {
+
+            $project = Project::findOrFail($id);
+            return view('admin.projects.edit', compact('project'));
+
+        }
+
+        return redirect()->route('403');
     }
 
     /**
@@ -79,7 +103,12 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $form_data = $request->all();
+
+        $project = Project::findOrFail($id);
+        $project->update($form_data);
+
+        return redirect()->route('admin.projects.index');
     }
 
     /**
@@ -90,6 +119,15 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = auth()->user();
+
+        if ($user && $user->role == 'admin') {
+            $project = Project::findOrFail($id);
+            $project->delete();
+
+            return redirect()->route('admin.projects.index');
+        }
+
+        return redirect()->route('403');
     }
 }

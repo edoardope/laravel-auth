@@ -32,15 +32,21 @@ Route::get('/403', function () {
     return view('guest.403');
 })->name('403');
 
-Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::middleware(['auth', 'verified'])->name('admin.')->group(function () {
+    Route::get('logged/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::resource('/projects', ProjectController::class);
 
 });
+
+Route::resource('/projects', ProjectController::class)->names([
+    'index' => 'admin.projects.index',
+    'store' => 'projects.store',
+    'edit' => 'admin.projects.edit',
+    'destroy' => 'project.destroy',
+]);
 
 require __DIR__ . '/auth.php';

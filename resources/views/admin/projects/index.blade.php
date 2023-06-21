@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('colorMode')
+dark
+@endsection
+
 @section('content')
 <div class="container">
     <h2 class="fs-4 text-secondary my-4">
@@ -24,6 +28,8 @@
                                     <th scope="col">Title</th>
                                     <th scope="col">Url</th>
                                     <th scope="col">Slug</th>
+                                    <th scope="col">Edit</th>
+                                    <th scope="col">Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -32,6 +38,17 @@
                                     <td scope="row">{{$item->title}}</td>
                                     <td>{{$item->url}}</td>
                                     <td>{{$item->slug}}</td>
+                                    <th><a href="{{ route( 'admin.projects.edit', $item ) }}">Edit Project</a></th>
+                                    <th>
+                                        <form action="{{ route('project.destroy', $item) }}" method="POST">
+
+                                        @csrf
+                                        @method('DELETE')
+                                      
+                                        <button>Delete</button>
+                                      
+                                      </form>
+                                    </th>
                                 </tr>                            
                                 @endforeach
                             </tbody>

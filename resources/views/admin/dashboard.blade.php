@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('colorMode')
+dark
+@endsection
+
 @section('content')
 <div class="container">
     <h2 class="fs-4 text-secondary my-4">
