@@ -8,7 +8,7 @@ dark
 <div class="container p-5">
     <div class="row ">
         <h2 class="mb-3">Edit project details:</h2>
-        <form class="bg-primary-subtle p-3 rounded" action="{{ route( 'projects.update', $project ) }}" method="POST">
+        <form class="bg-primary-subtle p-3 rounded" action="{{ route( 'projects.update', $project ) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="mb-3">
@@ -16,8 +16,8 @@ dark
               <input type="text" name="title" class="form-control" value="{{ old('title') ?? $project->title }}">
             </div>
             <div class="mb-3">
-                <label for="" class="form-label">Url:</label>
-                <input type="text" name="url" class="form-control" value="{{ old('url') ?? $project->url }}">
+                <label for="" class="form-label">Copertina</label>
+                <input type="file" class="form-control" name="cover_image" id="" placeholder="" aria-describedby="fileHelpId">
             </div>
             <div class="mb-3">
                 <label for="" class="form-label">Slug:</label>

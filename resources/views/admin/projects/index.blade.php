@@ -36,7 +36,7 @@ dark
                                 @foreach ($projects as $item)
                                 <tr class="">
                                     <td scope="row">{{$item->title}}</td>
-                                    <td>{{$item->url}}</td>
+                                    <td>{{$item->cover_image}}</td>
                                     <td>{{$item->slug}}</td>
                                     <th><a href="{{ route( 'admin.projects.edit', $item ) }}">Edit Project</a></th>
                                     <th>

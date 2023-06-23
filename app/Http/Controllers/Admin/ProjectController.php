@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -54,6 +55,12 @@ class ProjectController extends Controller
         $form_data = $request->all();
 
         $new_project = new Project();
+
+        if ($request->hasFile('cover_image')) {
+
+            $path = Storage::disk('public')->put('post_images', $request->cover_image);
+            $form_data['cover_image'] = $path;
+        }
 
         $new_project->fill($form_data);
         $new_project->save();
@@ -106,6 +113,18 @@ class ProjectController extends Controller
         $form_data = $request->all();
 
         $project = Project::findOrFail($id);
+
+        if ($request->hasFile('cover_image')) {
+
+            if ($project->cover_image) {
+                Storage::delete($project->cover_image);
+            }
+
+            $path = Storage::disk('public')->put('post_images', $request->cover_image);
+
+            $form_data['cover_image'] = $path;
+        }
+
         $project->update($form_data);
 
         return redirect()->route('admin.projects.index');
@@ -123,6 +142,9 @@ class ProjectController extends Controller
 
         if ($user && $user->role == 'admin') {
             $project = Project::findOrFail($id);
+            if ($project->cover_image) {
+                Storage::delete($project->cover_image);
+            }
             $project->delete();
 
             return redirect()->route('admin.projects.index');

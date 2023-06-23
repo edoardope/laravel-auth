@@ -6,7 +6,7 @@
     <div class="row">
         @foreach ($project as $item)
         <div class="card col-3 m-5">
-            <img class="card-img-top" src="{{$item->url}}" alt="Title">
+            <img class="card-img-top" src="{{ asset('storage/' . $item->cover_image) }}" alt="Title">
             <div class="card-body">
                 <h4 class="card-title">{{$item->title}}</h4>
                 <p class="card-text">Slug: {{$item->url}}</p>
